@@ -163,6 +163,8 @@ public class Manager : MonoBehaviour
     /// </summary>
     private void InstantiateCars()
     {
+        //transform.position = new Vector3(84, 0, 36);
+        //transform.Rotate(0, -90, 0, Space.Self);
         m_CarPool = new Queue<GameObject>();
         RayHolderRoot = new GameObject("RayHolderDeletable");
         CarHolderRoot = new GameObject("CarHolderDeletable");
@@ -491,7 +493,7 @@ public class Manager : MonoBehaviour
 
 
         CurrentTrack = Instantiate(Master.Instance.TrackPrefabs[Configuration.TrackNumber], transform.position, transform.rotation);
-        CurrentWayPoint = Instantiate(Master.Instance.WayPointPrefabs[Configuration.TrackNumber], transform.position, transform.rotation);
+        CurrentWayPoint = Instantiate(Master.Instance.WayPointPrefabs[Configuration.TrackNumber], new Vector3(80, 0, 46), transform.rotation);
         CurrentTrack.transform.name = "TrackDeletable";
         CurrentWayPoint.transform.name = "WaypointDeletable";
         DontDestroyOnLoad(CurrentTrack);
