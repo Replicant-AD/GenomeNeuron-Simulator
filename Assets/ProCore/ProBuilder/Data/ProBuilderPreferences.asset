@@ -20,6 +20,9 @@ MonoBehaviour:
   - pbMeshesAreAssets
   - pb_SmoothingGroupEditor::m_DrawNormals
   - pb_SmoothingGroupEditor::m_ShowPreview
+  - pbDragSelectWholeElement
+  - pb_MeshImporter::quads
+  - pb_MeshImporter::smoothing
   m_Int_keys:
   - pbDefaultEditLevel
   - pbDefaultSelectionMode
@@ -28,19 +31,27 @@ MonoBehaviour:
   - pbDefaultEntity
   - pbDefaultCollider
   - pbShadowCastingMode
+  - pbExtrudeMethod
+  - pbDragSelectMode
   m_Float_keys:
   - pbEditorScroll.x
   - pbEditorScroll.y
+  - pbExtrudeDistance
+  - pb_MeshImporter::smoothingThreshold
+  - pbBevelAmount
   m_String_keys:
   - pbCurrentMaterialPalette
   m_Color_keys: []
   m_Material_keys:
   - pbDefaultMaterial
-  m_Bool_values: 0101010100000000
-  m_Int_values: 01000000020000000200000001000000000000000200000002000000
+  m_Bool_values: 0101010100000000000001
+  m_Int_values: 000000000200000001000000010000000000000002000000020000000100000001000000
   m_Float_values:
   - 0
   - 0
+  - 0.5
+  - 1
+  - 0.99
   m_String_values:
   - Assets/ProCore/ProBuilder/Data/Default Material Palette.asset
   m_Color_values: []

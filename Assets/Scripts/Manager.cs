@@ -493,7 +493,7 @@ public class Manager : MonoBehaviour
 
 
         CurrentTrack = Instantiate(Master.Instance.TrackPrefabs[Configuration.TrackNumber], transform.position, transform.rotation);
-        CurrentWayPoint = Instantiate(Master.Instance.WayPointPrefabs[Configuration.TrackNumber], new Vector3(80, 0, 46), transform.rotation);
+        CurrentWayPoint = Instantiate(Master.Instance.WayPointPrefabs[Configuration.TrackNumber], transform.position, transform.rotation);
         CurrentTrack.transform.name = "TrackDeletable";
         CurrentWayPoint.transform.name = "WaypointDeletable";
         DontDestroyOnLoad(CurrentTrack);
