@@ -45,13 +45,13 @@ public abstract class GeneticAlgorithm : MonoBehaviour
     public int GenerationCount;
     protected NeuralNetwork[] CarNetworks;
 
-    // Ebben a tömbben tárolja a szelekciókor létrejövő párokat.
-    // Az első index a létrejövő pár sorszámát jelöli (ahány új autó kell)
-    // A második index a bal (0) és jobb (1) szülőket jelöli.
+    // In this array it stores the pairs created during selection.
+    // The first index indicates the sequence number of the created pair (as many new cars as needed)
+    // The second index indicates the left (0) and right (1) parents.
     protected int[][] CarPairs;
 
-    // 4D tömbben tárolja az összes autó neurális hálójának értékeit,
-    // mert rekombinációkor az eredeti értékekkel kell dolgozni.
+    // It stores the values of all cars' neural networks in a 4D array,
+    // because it has to work with the original values during recombination.
     public float[][][][] SavedCarNetworks;
 
     private Manager m_Manager;
@@ -84,9 +84,11 @@ public abstract class GeneticAlgorithm : MonoBehaviour
     private void FixedUpdate()
     {
         // Ha minden autó megfagyott, jöhet az új generáció
+        // If all cars have frozen, bring on the new generation
         if (m_Manager.AliveCount > 0) return;
 
         // Elmenti az összes autó neurális hálóját
+        // Saves neural networks of all cars
         SaveNeuralNetworks();
 
         if (m_Manager.IsLoad)
@@ -95,22 +97,22 @@ public abstract class GeneticAlgorithm : MonoBehaviour
             m_Manager.IsLoad = false;
         }
 
-        // Rendezi az autókat fitness értékük szerint csökkenő sorrendben
+        // Sorts cars by fitness value in decreasing order
         SortCarsByFitness();
 
-        // Kiszámolja a maximum és a medián fitnessét az autóknak
+        // Sorts cars by fitness value in decreasing order
         CalculateStats();
 
-        // Kiválasztja a következő generáció egyedeinek szüleit
+        // Selects parents for next generation
         Selection();
 
-        // A kiválasztott párokból létrehoz új egyedeket
+        // Creates new individuals from selected pairs  
         RecombineAndMutate();
 
-        // Respawnolja az új egyedeket
+        // Respawns the new individuals
         RespawnCars();
 
-        // Ha leállási feltétel meg volt adva és teljesült, leáll a szimuláció
+        // If stop condition was set and met, stop simulation
         if (m_Manager.Configuration.StopConditionActive &&
             m_Manager.Configuration.StopGenerationNumber < GenerationCount)
         {
@@ -120,7 +122,7 @@ public abstract class GeneticAlgorithm : MonoBehaviour
 
     protected void RespawnCars()
     {
-        // Respawnolja az összes autót 
+        //Respawns all cars 
         for (int i = 0; i < PopulationSize; i++)
         {
             m_Manager.Cars[i].PrevFitness = 0;
@@ -128,20 +130,21 @@ public abstract class GeneticAlgorithm : MonoBehaviour
             m_Manager.SpawnFromPool(m_Manager.transform.position, m_Manager.transform.rotation);
         }
 
-        // Ha a player játszik, a piros autót is respawnolja
+        // If player is playing, respawns the red car 
         if (m_Manager.ManualControl)
         {
             m_Manager.SpawnPlayerCar(m_Manager.transform.position, m_Manager.transform.rotation);
         }
 
         m_Manager.SetBackTimes();
-        // Növeli a generáció számlálót
+    
+        // Increments generation counter
         GenerationCount++;
         m_Manager.UiPrinter.GenerationCount = GenerationCount;
     }
 
     /// <summary>
-    /// Inicilizálja a savedCarNetwork tömböt, melyben a neurális hálók vannak tárolva.
+    /// Initializes the savedCarNetwork array where neural networks are stored
     /// </summary>
     public void InitSavedCarNetwork()
     {
@@ -176,7 +179,7 @@ public abstract class GeneticAlgorithm : MonoBehaviour
     }
 
     /// <summary>
-    /// Elmenti a neurális háló adatait a savedCarNetwork tömbbe
+    /// Saves neural network data into the savedCarNetwork array
     /// </summary>
     public void SaveNeuralNetworks()
     {

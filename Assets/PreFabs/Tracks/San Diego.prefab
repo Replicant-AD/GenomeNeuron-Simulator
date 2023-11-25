@@ -135,6 +135,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1199739393862936
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4275221183886752}
+  - component: {fileID: 65483836103458788}
+  m_Layer: 8
+  m_Name: BarrierZone (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1223226528697066
 GameObject:
   m_ObjectHideFlags: 1
@@ -1154,7 +1170,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1303622284416518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -519}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4235440341833954}
@@ -1355,6 +1371,7 @@ Transform:
   - {fileID: 4019408132561228}
   - {fileID: 4923904693577646}
   - {fileID: 4794121780019954}
+  - {fileID: 4275221183886752}
   m_Father: {fileID: 4067912966029298}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 44, z: 0}
@@ -1371,6 +1388,19 @@ Transform:
   m_Father: {fileID: 4235440341833954}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4275221183886752
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1199739393862936}
+  m_LocalRotation: {x: -0, y: -0.46752644, z: -0, w: 0.8839791}
+  m_LocalPosition: {x: 1137.7, y: 0.48, z: 114.85}
+  m_LocalScale: {x: 9.494221, y: 1, z: 0.12755999}
+  m_Children: []
+  m_Father: {fileID: 4235440341833954}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: -55.748, z: 0}
 --- !u!4 &4292112254866958
 Transform:
   m_ObjectHideFlags: 1
@@ -4830,6 +4860,18 @@ MeshCollider:
   m_CookingOptions: 30
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 78d469e1b333f0a40abfbb3ce8437c23, type: 2}
+--- !u!65 &65483836103458788
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1199739393862936}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!154 &154917440976965536
 TerrainCollider:
   m_ObjectHideFlags: 1
@@ -4848,7 +4890,7 @@ Terrain:
   m_GameObject: {fileID: 1772289326349768}
   m_Enabled: 1
   serializedVersion: 3
-  m_TerrainData: {fileID: 15600000, guid: 5609deb81d158f64286e1dc4a0530824, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
