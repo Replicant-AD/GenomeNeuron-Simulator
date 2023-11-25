@@ -45,13 +45,13 @@ public abstract class GeneticAlgorithm : MonoBehaviour
     public int GenerationCount;
     protected NeuralNetwork[] CarNetworks;
 
-    // In this array it stores the pairs created during selection.
+    // In this array it stores the pairs created during selection
     // The first index indicates the sequence number of the created pair (as many new cars as needed)
-    // The second index indicates the left (0) and right (1) parents.
+    // The second index indicates the left (0) and right (1) parents
     protected int[][] CarPairs;
 
     // It stores the values of all cars' neural networks in a 4D array,
-    // because it has to work with the original values during recombination.
+    // because it has to work with the original values during recombination
     public float[][][][] SavedCarNetworks;
 
     private Manager m_Manager;
@@ -83,11 +83,9 @@ public abstract class GeneticAlgorithm : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Ha minden autó megfagyott, jöhet az új generáció
         // If all cars have frozen, bring on the new generation
         if (m_Manager.AliveCount > 0) return;
 
-        // Elmenti az összes autó neurális hálóját
         // Saves neural networks of all cars
         SaveNeuralNetworks();
 
@@ -188,13 +186,13 @@ public abstract class GeneticAlgorithm : MonoBehaviour
             InitSavedCarNetwork();
         }
 
-        for (int i = 0; i < SavedCarNetworks.Length; i++)    // melyik autó
+        for (int i = 0; i < SavedCarNetworks.Length; i++)    // which car
         {
-            for (int j = 0; j < SavedCarNetworks[i].Length; j++) // melyik neuronréteg
+            for (int j = 0; j < SavedCarNetworks[i].Length; j++) // which neuron layer
             {
-                for (int k = 0; k < SavedCarNetworks[i][j].Length; k++) // melyik neuron
+                for (int k = 0; k < SavedCarNetworks[i][j].Length; k++) // which neuron
                 {
-                    for (int l = 0; l < SavedCarNetworks[i][j][k].Length; l++) // melyik súlya
+                    for (int l = 0; l < SavedCarNetworks[i][j][k].Length; l++) // which weight
                     {
                         SavedCarNetworks[i][j][k][l] = CarNetworks[i].NeuronLayers[j].NeuronWeights[k][l];
                     }
@@ -202,20 +200,20 @@ public abstract class GeneticAlgorithm : MonoBehaviour
             }
         }
     }
-
+   
     /// <summary>
-    /// Csökkenő sorrendbe rendezi az autók fitness értékeit.
+    /// Sorts the cars in decreasing order by fitness value
     /// </summary>
     protected void SortCarsByFitness()
     {
-        // Először összegyűjti az adatokat (ID + hozzá tartozó fitness) ...
+        // First collects the data (ID + associated fitness) ...
         for (int i = 0; i < PopulationSize; i++)
         {
             FitnessRecords[i].Id = m_Manager.Cars[i].Id;
             FitnessRecords[i].Fitness = m_Manager.Cars[i].Fitness;
         }
 
-        //  ... majd rendezi a stats tömböt csökkenő sorrendbe
+        // ... then sorts the stats array in decreasing order
         Array.Sort(FitnessRecords);
         Array.Reverse(FitnessRecords);
     }
@@ -244,11 +242,11 @@ public abstract class GeneticAlgorithm : MonoBehaviour
                         {
                             float mutation = RandomHelper.NextFloat(mutationRateMinimum, mutationRateMaximum);
                             
-                            // 50% eséllyel örököl az egyik szülőtől.
-                            // carPairs[i] a két szülő indexét tartalmazza
+                            // 50% chance of inheriting from one parent
+                            // carPairs[i] contains indices of both parents
                             int index = CarPairs[i][RandomHelper.NextInt(0, 1)];
 
-                            // A MutationChance értékétől függően változik a mutáció valószínűsége
+                            // The probability of mutation varies with the MutationChance value
                             if (RandomHelper.NextInt(0, 100) <= MutationChance)
                             {
                                 CarNetworks[i].NeuronLayers[j].NeuronWeights[k][l] =
