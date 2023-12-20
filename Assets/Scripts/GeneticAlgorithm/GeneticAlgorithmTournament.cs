@@ -21,23 +21,23 @@ using UnityEngine;
 
 public class GeneticAlgorithmTournament : GeneticAlgorithm
 {
-    // A tournament során ennyi autó "versenyzik" egyszerre egymással
+    // During tournament selection this many cars "compete" with each other at once
     private int m_SelectionPressure = 3;
 
     protected override void Selection()
     {
-        // A kiválasztott autó ID-ket tárolja egy körig
+        // Stores the selected car IDs for one round
         List<int> pickedCarIdList = new List<int>();
 
         int paired = 0;
 
-        // Az első szülő minden párnál full random
+        // The first parent of each pair is fully random
         for (int i = 0; i < PopulationSize; i++)
         {
             CarPairs[i][0] = RandomHelper.NextInt(0, PopulationSize - 1);
         }
 
-        // Amíg meg nincs meg az összes pár, új tournament
+        // While not all pairs are ready, new tournament
         while (paired < PopulationSize)
         {
             #region Jelenlegi tournament inicializálása
@@ -48,13 +48,13 @@ public class GeneticAlgorithmTournament : GeneticAlgorithm
             }
             #endregion
 
-            // Amíg van elég versenyző a tournamenten belül (és még kell pár), versenyzők kiválasztása
+            // As long as there are enough competitors in the tournament (and more pairs needed), select competitors
             while (tournament.Count >= m_SelectionPressure && paired < PopulationSize)
             {
-                // A kiválasztottak kiürítése
+                // Emptying the selected
                 pickedCarIdList.Clear();
 
-                // Amíg meg nincs mindegyik versenyző
+                // Until each competitor is selected
                 while (pickedCarIdList.Count != m_SelectionPressure)
                 {
                     int current = tournament[RandomHelper.NextInt(0, tournament.Count - 1)];
@@ -65,7 +65,7 @@ public class GeneticAlgorithmTournament : GeneticAlgorithm
                     }
                 }
 
-                // Párosítás
+                // Pairing
                 CarPairs[paired][1] = GetTournamentBestIndex(pickedCarIdList);
                 paired++;
             }
