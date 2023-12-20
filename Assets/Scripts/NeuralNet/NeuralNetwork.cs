@@ -32,8 +32,8 @@ public class NeuralNetwork : MonoBehaviour
 
     public CarController CarController;
 
-    // Az auto iranyitasa a tombelemek alapjan tortenik
-    // control[0] = kanyarodas , control[1] = gyorsulas 
+    // The car is controlled based on the array elements
+    // control[0] = steering , control[1] = acceleration 
     private float[] m_Control = new float[2];
 
     private void Start()
@@ -58,7 +58,7 @@ public class NeuralNetwork : MonoBehaviour
             m_TransferData[i] = new float[m_NeuronCount];
         }
 
-        // hidden layers, +1 output layer
+        // Hidden layers, +1 output layer
         NeuronLayers = new NeuronLayer[m_HiddenLayerCount + 1];
 
         switch (m_HiddenLayerCount)
