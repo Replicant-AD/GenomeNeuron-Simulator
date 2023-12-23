@@ -21,28 +21,28 @@ using UnityEngine;
 
 public class GeneticAlgorithmWorstRandom : GeneticAlgorithm
 {
-	// A tournament során ennyi autó "versenyzik" egyszerre egymással
+	// During tournament selection this many cars "compete" with each other at once
 	private int m_SelectionPressure = 3;
 	private int m_Top80Percent;
 
 	protected override void Selection()
 	{
-		// A kiválasztott autó ID-ket tárolja egy körig
+		// Stores the selected car IDs for one round
 		List<int> pickedCarIdList = new List<int>();
 
 		int paired = 0;
 
-		// Az első szülő minden párnál full random
+		// The first parent of each pair is fully random
 		for (int i = 0; i < PopulationSize; i++)
 		{
 			CarPairs[i][0] = RandomHelper.NextInt(0, PopulationSize - 1);
 		}
 
 
-		// Amíg meg nincs meg az összes pár, új tournament
+		// While not all pairs are ready, new tournament
 		while (paired < PopulationSize)
 		{
-			#region Jelenlegi tournament inicializálása
+			#region Current tournament initialization
 			List<int> tournament = new List<int>();
 			for (int i = 0; i < PopulationSize; i++)
 			{
@@ -50,13 +50,13 @@ public class GeneticAlgorithmWorstRandom : GeneticAlgorithm
 			}
 			#endregion
 
-			// Amíg van elég versenyző a tournamenten belül (és még kell pár), versenyzők kiválasztása
+			// As long as there are enough competitors in the tournament (and more pairs needed), select competitors
 			while (tournament.Count >= m_SelectionPressure && paired < PopulationSize)
 			{
-				// A kiválasztottak kiürítése
+				// Emptying the selected
 				pickedCarIdList.Clear();
 
-				// Amíg meg nincs mindegyik versenyző
+				// Until each competitor is selected
 				while (pickedCarIdList.Count != m_SelectionPressure)
 				{
 					int current = tournament[RandomHelper.NextInt(0, tournament.Count - 1)];
@@ -67,7 +67,7 @@ public class GeneticAlgorithmWorstRandom : GeneticAlgorithm
 					}
 				}
 
-				// Párosítás
+				// Pairing
 				CarPairs[paired][1] = GetTournamentBestIndex(pickedCarIdList);
 				paired++;
 			}
@@ -112,13 +112,13 @@ public class GeneticAlgorithmWorstRandom : GeneticAlgorithm
 		float mutationRateMaximum = (100 + MutationRate) / 100;
 		m_Top80Percent = (int)(PopulationSize * 0.8f);
 
-		for (int i = 0; i < SavedCarNetworks.Length; i++)    // melyik autó
+		for (int i = 0; i < SavedCarNetworks.Length; i++)    // which car
 		{
-			for (int j = 0; j < SavedCarNetworks[i].Length; j++) // melyik neuronréteg
+			for (int j = 0; j < SavedCarNetworks[i].Length; j++) // which neuron layer
 			{
-				for (int k = 0; k < SavedCarNetworks[i][j].Length; k++) // melyik neuron
+				for (int k = 0; k < SavedCarNetworks[i][j].Length; k++) // which neuron
 				{
-					for (int l = 0; l < SavedCarNetworks[i][j][k].Length; l++) // melyik súlya
+					for (int l = 0; l < SavedCarNetworks[i][j][k].Length; l++) // which weight
 					{
 						if (i == FitnessRecords[0].Id)
 						{
@@ -127,17 +127,17 @@ public class GeneticAlgorithmWorstRandom : GeneticAlgorithm
 						}
 						else if (i >= m_Top80Percent)
 						{
-							// Az autók 20%-a újra lesz randomolva minden körben.
+							// 20% of cars will be randomly reassigned every round.
 							CarNetworks[i].NeuronLayers[j].NeuronWeights[k][l] = RandomHelper.NextFloat(-1f, 1f);
 						}
 						else
 						{
 							var mutation = RandomHelper.NextFloat(mutationRateMinimum, mutationRateMaximum);
-							// 50% eséllyel örököl az egyik szülőtől.
-							// carPairs[i] a két szülő indexét tartalmazza
+							// 50% chance of inheriting from one parent.
+							// carPairs[i] contains indices of both parents
 							var index = CarPairs[i][RandomHelper.NextInt(0, 1)];
 
-							// A MutationChance értékétől függően változik a mutáció valószínűsége
+							// The probability of mutation varies with the MutationChance value
 							if (RandomHelper.NextInt(1, 100) <= MutationChance)
 							{
 								CarNetworks[i].NeuronLayers[j].NeuronWeights[k][l] =
