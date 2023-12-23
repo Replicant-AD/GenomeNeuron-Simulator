@@ -33,14 +33,14 @@ public class GeneticAlgorithmTopHalf : GeneticAlgorithm
 
         for (int i = 0; i < PopulationSize; i++)
         {
-            // A top 50%-ból kirandomol egyet, ő lesz a bal szülő
+            // Randomly selects one from the top 50%, it will be the left parent
             int random = RandomHelper.NextInt(0, m_TopHalfId.Length - 1);
             CarPairs[i][0] = m_TopHalfId[random];
 
             do
             {
-                // A top 50%-ból kirandomol egyet, ő lesz a jobb szülő
-                // Ha megegyezik a bal szülővel, újat randomol.
+                // Randomly selects one from the top 50%, it will be the right parent
+                // If it is the same as the left parent, randomly selects a new one.
                 random = RandomHelper.NextInt(0, m_TopHalfId.Length - 1);
                 CarPairs[i][1] = m_TopHalfId[random];
             } while (CarPairs[i][0] == CarPairs[i][1]);
